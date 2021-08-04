@@ -1,0 +1,122 @@
+Desenho esquemático: Ciclo de Rankine
+
+		     | qH
+       (4)	     V		    (1)
+   P4 = 4.0 Mpa	 +--------+	x1 = 1,0
+   |------>------|CALDEIRA|------->-------|
+   |   		 +--------+ 		  |
+   |      				  |
++-----+				      +-------+
+|BOMBA|				      |TURBINA|
++-----+				      +-------+
+   |      				  |
+   |		+-----------+ 		  |
+   |------<-----|CONDENSADOR|------<------|
+          (3)  	+-----------+	   (2)
+	x3 = 0        | qL     P2 = 30.0 Kpa, x2 = ?
+		      V
+
+Lista de considerações:
+
+* Fluido de trabalho: água
+* Cada componente do ciclo é avaliado como volume de controle
+* Regime permanente
+* A turbina e a bomba operam adiabaticamente
+* A caldeira e o condensador operam à pressão constante
+* Variações de Ec e Ep são desprezíveis
+* Não há trabalho na caldeira e no condensador
+* Processos internamente reversíveis
+
+1) Turbina(processo 1->2): expansão adiabática -> isentrópica
+
+1ª Lei da Termodinâmica: wt = h1 - h2
+2ª Lei da Termodinâmica: s1 = s2
+
+* Estado 1: vapor saturado; x1 = 1,0; P1 = 4.0 Mpa (40.0 bar)
+
+Tabela A-3 (40.0 bar): h1 = 2801.4 kJ/kg 	 s1 = 6.0701 kJ/kg*K
+
+* Estado 2: mistura bifásica; x2 = ?; P2 = 30.0 Kpa (0.3 bar)
+
+-> Encontrando x2:
+
+s2 = s1 = 6.0701 kJ/kg*K
+Tabela A-3 (0.3 bar): hL = 289.23 kJ/kg 	 sL = 0.9439 kJ/kg*K
+                      hV = 2625.3 kJ/kg 	 sV = 7.7686 kJ/kg*K
+s2 = sL +x2*(sV-sL) -> x2 = (s2-sL)/(sV-sL)
+x2 = (6.0701 - 0.9439)kJ/kg*K/(7.7686 - 0.9439)kJ/kg*K
+x2 = 0.7511
+
+-> Encontrando h2:
+
+h2 = hL + x2*(hV - hL) -> h2 = 289.23 kJ/kg + 0.7511*(2625.3 - 289.23) kJ/kg
+h2 = 2043.9096 kJ/kg
+
+-> Calculando wt:
+
+wt = h1 - h2 -> wt = 2801.4000 kJ/kg - 2043.9096 kJ/kg
++---------------------+
+| wt = 757.4904 kJ/kg |
++---------------------+
+O sinal do trabalho na turbina é positivo, pois 
+ela realiza trabalho (sai energia do sistema).
+
+2) Condensador(processo 2->3): rejeição de calor à P cte
+
+1ª Lei da Termodinâmica: qL = h2 - h3
+
+* Estado 3: líquido saturado; x3 = 0; P3 = 30.0 Kpa (0.3 bar)
+
+Tabela A-3 (0.3 bar): h3 = 289.23 kJ/kg 	 v3 = 0.0010223 m3/kg
+
+-> Calculando qL:
+
+qL = h3 - h2 -> qL = 289.23 kJ/kg - 2043.91 kJ/kg
++-----------------------+
+| qL = -1754.6796 kJ/kg |
++-----------------------+
+O sinal do calor no condensador é negativo, pois o
+calor sai do sistema (diminui energia do sistema)
+uma vez que o vapor se encontra em um estado energético
+maior que o líquido e para transformar vapor em 
+líquido é preciso retirar energia do sistema.
+
+3) Bomba(processo 2->3): compressão adiabática -> isentrópica
+
+1ª Lei da Termodinâmica: wb = h4 - h3
+2ª Lei da Termodinâmica: s3 = s4
+
+* Estado 4: líquido comprimido; P4 = 4.0 Mpa (40.0 bar)
+
+-> Calculando wb:
+
+wb = v3*(P4 - P3) -> wb = 0.0010223 m3/kg *(4000000.0 - 30000.0) N/m2
++---------------------+
+| |wb| = 4.0585 kJ/kg |
++---------------------+
+O sinal do trabalho na bomba é negativo, pois 
+para funcionar a bomba consome trabalho, logo 
+energia é acrescentada ao sistema.
+
+-> Encontrando h4:
+
+wb = h4 - h3 -> h4 = wb + h3 -> h4 = 4.06 kJ/kg + 289.23 kJ/kg
+h4 = 293.2885 kJ/kg
+
+4) Caldeira(processo 4->1): adição de calor à P cte
+
+1ª Lei da Termodinâmica: qH = h1 - h4
+
+qH = h1 - h4 -> qH = 2801.4 kJ/kg - 293.3 kJ/kg
++----------------------+
+| qH = 2508.1115 kJ/kg |
++----------------------+
+O sinal do calor na caldeira é positivo, visto que 
+é transferido calor para o sistema (aumenta a energia do sistema).
+
+-> Calculando a eficiência térmica:
+
+nT = (wt - |wb|)/qH -> nT = (757.4904 kJ/kg - 4.0585 kJ/kg)/2508.1115 kJ/kg 
++-------------+
+| nT = 30.04% |
++-------------+
